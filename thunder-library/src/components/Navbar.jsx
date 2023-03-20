@@ -24,7 +24,7 @@ const styles = {
     fontFamily: "Montserrat Alternates, sans-serif",
   },
   navbar: {
-    height: "80px",
+    height: "60px",
     justifyContent: "center",
     background: "linear-gradient(290deg, #000006 80%, #26428B)",
   },
@@ -32,15 +32,15 @@ const styles = {
     "& button": {
       outline: "none",
     },
-    height: "80px",
+    height: "60px",
   },
   tab: {
-    height: "80px",
+    height: "60px",
   },
 };
 
 const Navbar = () => {
-  const [value, setValue] = React.useState("one");
+  const [value, setValue] = React.useState("home");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -52,9 +52,13 @@ const Navbar = () => {
     about && about.scrollIntoView({ behavior: "smooth", block: "center"});
   };
 
+  const scrolltoTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   return (
     <Box sx={styles.root}>
-      <AppBar position="static" sx={styles.navbar}>
+      <AppBar position="fixed" sx={styles.navbar}>
         <Toolbar>
           <Typography variant="h6" sx={styles.title}>
             Thunder Library
@@ -73,9 +77,7 @@ const Navbar = () => {
                   label="Inicio"
                   disableRipple
                   sx={styles.tab}
-                  onClick={(e) => {
-                    handleClick(e, "home")
-                  }}
+                  onClick={scrolltoTop}
                 />
                 <Tab
                   value="about"

@@ -8,13 +8,15 @@ import background from "../assets/images/background.png";
 const styles = {
   container: {
     backgroundImage: `url(${background})`,
+    maskImage: "linear-gradient(black 80%, transparent)",
+    clipPath: "ellipse(99% 76% at 50% 22%)",
+    marginTop: "60px",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "100vh",
+    height: "105vh",
     color: "black",
     display: "flex",
     justifyContent: "left",
-    paddingTop: "80px",
     padding: "0 2rem",
     overflow: "hidden",
   },
@@ -50,7 +52,7 @@ const styles = {
 const Home = () => {
   return (
     <Box sx={styles.home}>
-      <Box sx={styles.container}>
+      <Box sx={styles.container} id="home">
         <Grid sx={styles.banner}>
           <Grid sx={styles.about}>
             <Typography>
@@ -75,14 +77,14 @@ const Home = () => {
 
       <Box
         id="about"
-        sx={{ height: "80vh", display: "flex", justifyContent: "center", my: 5}}
+        sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10}}
       >
         <Typography variant="h3">About</Typography>
       </Box>
 
       <Box
         id="contact"
-        sx={{ height: "80vh", display: "flex", justifyContent: "center", my: 5}}
+        sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10}}
       >
         <Typography variant="h3">Contact</Typography>
       </Box>
