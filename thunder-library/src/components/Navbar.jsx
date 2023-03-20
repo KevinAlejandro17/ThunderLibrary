@@ -1,6 +1,7 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box, Tabs, Tab } from "@mui/material";
 import "../App.css";
+
 
 const styles = {
   root: {
@@ -9,7 +10,7 @@ const styles = {
   title: {
     flexGrow: 1,
     textAlign: "left",
-    fontFamily: 'Montserrat Alternates, sans-serif',
+    fontFamily: "Montserrat Alternates, sans-serif",
   },
   options: {
     display: "flex",
@@ -20,16 +21,37 @@ const styles = {
   option: {
     margin: "0 10px",
     variant: "body",
-    fontFamily: 'Montserrat Alternates, sans-serif',    
+    fontFamily: "Montserrat Alternates, sans-serif",
   },
   navbar: {
     height: "80px",
     justifyContent: "center",
-    background: 'linear-gradient(290deg, #000006 80%, #26428B)'
+    background: "linear-gradient(290deg, #000006 80%, #26428B)",
+  },
+  tabs: {
+    "& button": {
+      outline: "none",
+    },
+    height: "80px",
+  },
+  tab: {
+    height: "80px",
   },
 };
 
 const Navbar = () => {
+  const [value, setValue] = React.useState("one");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleClick = (e, sectionID) => {
+    let about = document.getElementById(`${sectionID}`);
+    e.preventDefault();
+    about && about.scrollIntoView({ behavior: "smooth", block: "center"});
+  };
+
   return (
     <Box sx={styles.root}>
       <AppBar position="static" sx={styles.navbar}>
@@ -38,9 +60,41 @@ const Navbar = () => {
             Thunder Library
           </Typography>
           <Box sx={styles.options}>
-            <Typography sx={styles.option}>Home</Typography>
-            <Typography sx={styles.option}>About</Typography>
-            <Typography sx={styles.option}>Contact</Typography>
+            <Box sx={{ width: "100%" }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="white"
+                indicatorColor="secondary"
+                sx={styles.tabs}
+              >
+                <Tab
+                  value="home"
+                  label="Inicio"
+                  disableRipple
+                  sx={styles.tab}
+                  onClick={(e) => {
+                    handleClick(e, "home")
+                  }}
+                />
+                <Tab
+                  value="about"
+                  label="Acerca de"
+                  disableRipple
+                  onClick={(e) => {
+                    handleClick(e, "about")
+                  }}
+                />
+                <Tab
+                  value="contact"
+                  label="Contáctanos"
+                  disableRipple
+                  onClick={(e) => {
+                    handleClick(e, "contact")
+                  }}
+                />
+              </Tabs>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
