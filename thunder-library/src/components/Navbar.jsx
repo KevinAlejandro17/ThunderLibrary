@@ -3,42 +3,6 @@ import { AppBar, Toolbar, Typography, Box, Tabs, Tab } from "@mui/material";
 import "../App.css";
 
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-    textAlign: "left",
-    fontFamily: "Montserrat Alternates, sans-serif",
-  },
-  options: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  option: {
-    margin: "0 10px",
-    variant: "body",
-    fontFamily: "Montserrat Alternates, sans-serif",
-  },
-  navbar: {
-    height: "60px",
-    justifyContent: "center",
-    background: "linear-gradient(290deg, #000006 80%, #26428B)",
-  },
-  tabs: {
-    "& button": {
-      outline: "none",
-    },
-    height: "60px",
-  },
-  tab: {
-    height: "60px",
-  },
-};
-
 const Navbar = () => {
   const [value, setValue] = React.useState("home");
 
@@ -49,12 +13,12 @@ const Navbar = () => {
   const handleClick = (e, sectionID) => {
     let about = document.getElementById(`${sectionID}`);
     e.preventDefault();
-    about && about.scrollIntoView({ behavior: "smooth", block: "center"});
+    about && about.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const scrolltoTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   return (
     <Box sx={styles.root}>
@@ -73,6 +37,7 @@ const Navbar = () => {
                 sx={styles.tabs}
               >
                 <Tab
+                  className="NavOption"
                   value="home"
                   label="Inicio"
                   disableRipple
@@ -80,19 +45,21 @@ const Navbar = () => {
                   onClick={scrolltoTop}
                 />
                 <Tab
+                  className="NavOption"
                   value="about"
                   label="Acerca de"
                   disableRipple
                   onClick={(e) => {
-                    handleClick(e, "about")
+                    handleClick(e, "about");
                   }}
                 />
                 <Tab
+                  className="NavOption"
                   value="contact"
                   label="Contáctanos"
                   disableRipple
                   onClick={(e) => {
-                    handleClick(e, "contact")
+                    handleClick(e, "contact");
                   }}
                 />
               </Tabs>
@@ -105,3 +72,35 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  title: {
+    flexGrow: 1,
+    textAlign: "left",
+    fontFamily: "Open Sans, sans-serif",
+  },
+  options: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  navbar: {
+    height: "60px",
+    justifyContent: "center",
+    background: "linear-gradient(290deg, #000006 80%, #26428B)",
+  },
+  tabs: {
+    "& button": {
+      outline: "none",
+    },
+    height: "60px",
+    "& .MuiTab-root": {
+      fontFamily: "Open Sans, sans-serif",
+      height: "60px",
+    }
+  },
+};

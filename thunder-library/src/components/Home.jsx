@@ -5,49 +5,10 @@ import "../App.css";
 
 import background from "../assets/images/background.png";
 
-const styles = {
-  container: {
-    backgroundImage: `url(${background})`,
-    maskImage: "linear-gradient(black 80%, transparent)",
-    clipPath: "ellipse(99% 76% at 50% 22%)",
-    marginTop: "60px",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: "105vh",
-    color: "black",
-    display: "flex",
-    justifyContent: "left",
-    padding: "0 2rem",
-    overflow: "hidden",
-  },
+import About from './About';
+import Contact from './Contact';
+import Footer from './Footer';
 
-  about: {
-    width: "25%",
-    textAlign: "left",
-    "& .MuiTypography-root": {
-      fontSize: "1.4rem",
-      fontFamily: "Montserrat Alternates, sans-serif",
-      fontWeight: "bold",
-      color: "white",
-    },
-  },
-
-  banner: {
-    display: "flex",
-    mt: "15vh",
-    width: "100vw",
-    height: "100%",
-    flexDirection: "row",
-  },
-
-  home: {
-    "& .MuiTypography-root": {
-      fontFamily: "Montserrat Alternates, sans-serif",
-      fontWeight: "bold",
-      color: "white",
-    },
-  },
-};
 
 const Home = () => {
   return (
@@ -75,21 +36,55 @@ const Home = () => {
         </Grid>
       </Box>
 
-      <Box
-        id="about"
-        sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10}}
-      >
-        <Typography variant="h3">About</Typography>
-      </Box>
-
-      <Box
-        id="contact"
-        sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10}}
-      >
-        <Typography variant="h3">Contact</Typography>
-      </Box>
+      <About />
+      <Contact />
+      <Footer />
     </Box>
   );
 };
 
 export default Home;
+
+const styles = {
+  container: {
+    backgroundImage: `url(${background})`,
+    maskImage: "linear-gradient(black 90%, transparent)",
+    clipPath: "ellipse(99% 76% at 50% 22%)",
+    marginTop: "60px",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "105vh",
+    color: "black",
+    display: "flex",
+    justifyContent: "left",
+    padding: "0 2rem",
+    overflow: "hidden",
+  },
+
+  about: {
+    width: "25%",
+    textAlign: "left",
+    "& .MuiTypography-root": {
+      fontSize: "1.4rem",
+      fontFamily: "Open Sans, sans-serif",
+      fontWeight: "bold",
+      color: "white",
+    },
+  },
+
+  banner: {
+    display: "flex",
+    mt: "15vh",
+    width: "100vw",
+    height: "100%",
+    flexDirection: "row",
+  },
+
+  home: {
+    "& .MuiTypography-root": {
+      fontFamily: "Montserrat Alternates, sans-serif",
+      fontWeight: "bold",
+      color: "white",
+    },
+  },
+};
