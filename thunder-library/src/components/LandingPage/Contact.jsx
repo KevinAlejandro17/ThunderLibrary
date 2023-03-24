@@ -7,7 +7,7 @@ const Contact = () => {
       id="contact"
       sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10 }}
     >
-      <Typography variant="h3">Contact</Typography>
+      <Typography variant="h3">Contáctanos</Typography>
     </Box>
   );
 };

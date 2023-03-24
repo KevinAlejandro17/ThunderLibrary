@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Box, Typography, Grid, Button } from "@mui/material";
-import "../App.css";
+import "../../App.css";
 
-import background from "../assets/images/background.png";
+import background from "../../assets/images/background.png";
 
 import About from './About';
 import Contact from './Contact';

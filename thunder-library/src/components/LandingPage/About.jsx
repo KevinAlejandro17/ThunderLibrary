@@ -7,7 +7,7 @@ const About = () => {
       id="about"
       sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10 }}
     >
-      <Typography variant="h3">About</Typography>
+      <Typography variant="h3">Acerca de</Typography>
     </Box>
   );
 };
