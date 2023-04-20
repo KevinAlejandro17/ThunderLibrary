@@ -8,6 +8,7 @@ import background from "../../assets/images/background.png";
 import About from './About';
 import Contact from './Contact';
 import Footer from './Footer';
+import Formulario from './Formulario';
 
 
 const Home = () => {
@@ -38,6 +39,7 @@ const Home = () => {
 
       <About />
       <Contact />
+      <Formulario />
       <Footer />
     </Box>
   );
