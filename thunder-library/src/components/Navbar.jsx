@@ -42,13 +42,13 @@ const Navbar = () => {
 
   return (
     <Box sx={styles.root}>
-      <AppBar position="fixed" className={path==="/login" ? "Navbar-login" : "Navbar"}>
+      <AppBar position="fixed" className={path==="/login" ? "Navbar-login" :"Navbar"}>
         <Toolbar>
           <Typography variant="h6" sx={styles.title}>
             Thunder Library
           </Typography>
           <Box sx={styles.options}>
-            {path === "/login" ? (
+            {path === "/login"? (
               <Box sx={{ display: "flex", columnGap: 5 }}>
                 <IconButton
                   disableRipple
@@ -101,9 +101,9 @@ const Navbar = () => {
               variant="contained"
               disableRipple
               onClick={() => navigate("/login")}
-              className={path === "/login" ? "RegisterBtn" : "LoginBtn"}
+              className={path === "/login" ? "RegisterBtn" :(path === "/nuevoPrestamo" ? "LogoutBtn" : "LoginBtn")}
             >
-              {path === "/login" ? "Registrarse" : "Ingresar"}
+              {path === "/login" ? "Registrarse" :(path === "/nuevoPrestamo" ? "Cerrar sesión" : "Ingresar")}
             </Button>
           </Box>
         </Toolbar>
