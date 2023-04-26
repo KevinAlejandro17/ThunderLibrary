@@ -8,6 +8,8 @@ import {
   styled,
 } from "@mui/material";
 
+import SearchResults from "./SearchResults";
+
 function BookSearch({ onSearch }) {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
@@ -37,60 +39,57 @@ function BookSearch({ onSearch }) {
 
   return (
     <Box
-    id="search"
+      id="search"
       sx={{
-        py:20,
+        py: 20,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-       
       }}
     >
       <Typography variant="h3">Buscar</Typography>
       <React.Fragment>
-        <h3>
-          Ingresa los datos del libro que deseas.
-        </h3>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id="book-search"
-          label="Titulo"
-          value={query}
-          onChange={handleQueryChange}
-          fullWidth
-          sx={styles.input}
-        />
-        <TextField
-          id="book-genre"
-          label="Genero"
-          value={genre}
-          onChange={handleGenreChange}
-          fullWidth
-          sx={styles.input}
-          
-        />
-        <TextField
-          id="book-year"
-          label="Año de Publicacion"
-          type="number"
-          value={year}
-          onChange={handleYearChange}
-          fullWidth
-          sx={styles.input}
-        />
-        <TextField
-          id="book-author"
-          label="Autor"
-          value={author}
-          onChange={handleAuthorChange}
-          fullWidth
-          sx={styles.input}
-        />
-        <Button variant="contained" type="submit">
-          Search
-        </Button>
-      </form>
+        <h3>Ingresa los datos del libro que deseas.</h3>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            id="book-search"
+            label="Titulo"
+            value={query}
+            onChange={handleQueryChange}
+            fullWidth
+            sx={styles.input}
+          />
+          <TextField
+            id="book-genre"
+            label="Genero"
+            value={genre}
+            onChange={handleGenreChange}
+            fullWidth
+            sx={styles.input}
+          />
+          <TextField
+            id="book-year"
+            label="Año de Publicacion"
+            type="number"
+            value={year}
+            onChange={handleYearChange}
+            fullWidth
+            sx={styles.input}
+          />
+          <TextField
+            id="book-author"
+            label="Autor"
+            value={author}
+            onChange={handleAuthorChange}
+            fullWidth
+            sx={styles.input}
+          />
+          <Button variant="contained" type="submit">
+            Search
+          </Button>
+        </form>
+        <SearchResults />
       </React.Fragment>
     </Box>
   );
@@ -111,6 +110,6 @@ const styles = {
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "white",
     },
-   mb: 4 // add margin top
+    mb: 4, // add margin top
   },
 };

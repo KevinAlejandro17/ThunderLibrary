@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/LandingPage/Home";
 import Login from "./components/Login/Login";
 import SolicitudPrestamo from "./components/NuevoPrestamo/SolicitudPrestamo";
-import BookSearch from "./components/LandingPage/BookSearch";
+import BookSearch from "./components/Books/BookSearch";
 
 //import ContextProvider
 import ContextProvider from "./context/Context";

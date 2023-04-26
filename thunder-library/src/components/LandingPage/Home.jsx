@@ -9,7 +9,7 @@ import About from './About';
 import Contact from './Contact';
 import Footer from './Footer';
 import Suscripcion from './Suscripcion';
-import BookSearch from "./BookSearch";
+import BookSearch from "../Books/BookSearch";
 
 
 const Home = () => {
