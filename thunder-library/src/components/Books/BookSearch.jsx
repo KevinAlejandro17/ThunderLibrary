@@ -54,7 +54,7 @@ function BookSearch({ onSearch }) {
         <form onSubmit={handleSubmit}>
           <TextField
             id="book-search"
-            label="Titulo"
+            label="Título"
             value={query}
             onChange={handleQueryChange}
             fullWidth
@@ -62,7 +62,7 @@ function BookSearch({ onSearch }) {
           />
           <TextField
             id="book-genre"
-            label="Genero"
+            label="Género"
             value={genre}
             onChange={handleGenreChange}
             fullWidth
@@ -70,7 +70,7 @@ function BookSearch({ onSearch }) {
           />
           <TextField
             id="book-year"
-            label="Año de Publicacion"
+            label="Año de publicación"
             type="number"
             value={year}
             onChange={handleYearChange}
