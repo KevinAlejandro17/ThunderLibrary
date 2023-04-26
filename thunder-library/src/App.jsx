@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/LandingPage/Home";
 import Login from "./components/Login/Login";
 import SolicitudPrestamo from "./components/NuevoPrestamo/SolicitudPrestamo";
+import BookSearch from "./components/LandingPage/BookSearch";
 
 //import ContextProvider
 import ContextProvider from "./context/Context";
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/" element={<Home/>}></Route>
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/nuevoPrestamo" element={<SolicitudPrestamo/>}> </Route>
+            <Route path="/bookSearch" element={<BookSearch/>}> </Route>
           </Routes>
         </Router>
       </ContextProvider>

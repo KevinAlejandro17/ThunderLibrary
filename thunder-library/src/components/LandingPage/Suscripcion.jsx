@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Typography, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const Formulario = () => {
+const Suscripción = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
@@ -13,7 +13,7 @@ const Formulario = () => {
 
   return (
     <Box
-      id="about"
+      id="Suscription"
       sx={{ height: "30vh", display: "grid", placeItems: "center", py: 10 }}
     >
       <Typography variant="h3">Suscripción</Typography>
@@ -52,7 +52,7 @@ const Formulario = () => {
   );
 };
 
-export default Formulario;
+export default Suscripción;
 
 const styles = {
   input: {
