@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Box, Typography, Grid, Button } from "@mui/material";
 import "../../App.css";
 
 import background from "../../assets/images/background.png";
 
-import About from './About';
-import Contact from './Contact';
-import Footer from './Footer';
+import About from "./About";
+import Contact from "./Contact";
+import Footer from "./Footer";
+import BookSearch from "../Books/BookSearch";
 
+import { supabase } from "./../../../backend/client";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    console.log(user.id);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event, session);
+      if (!session) {
+        navigate('/')   
+      } else {
+        navigate('/bookSearch')
+      }
+    });
+  }, []);
+
   return (
     <Box sx={styles.home}>
       <Box sx={styles.container} id="home">
@@ -23,12 +46,13 @@ const Home = () => {
             </Typography>
 
             <a
-              onClick={(e) => {
+              onClick={() => getUser()}
+              /* onClick={(e) => {
                 let about = document.getElementById("about");
                 e.preventDefault();
                 about &&
                   about.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
+              }} */
             >
               <button>Ver más</button>
             </a>
@@ -38,6 +62,7 @@ const Home = () => {
 
       <About />
       <Contact />
+
       <Footer />
     </Box>
   );

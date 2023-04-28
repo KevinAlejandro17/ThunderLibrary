@@ -18,9 +18,11 @@ import {
 //documentation: https://mui.com/material-ui/material-icons/
 import HomeRounded from "@mui/icons-material/HomeRounded";
 
-import "../App.css";
 
-const Navbar = () => {
+import "../App.css";
+import { supabase } from './../../backend/client';
+
+const Navbar = ({ session }) => {
   const [value, setValue] = React.useState("home");
   const navigate = useNavigate();
 
@@ -40,9 +42,24 @@ const Navbar = () => {
 
   const path = window.location.pathname;
 
+  const handleLogout = async() => {
+
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } 
+  };
+
   return (
     <Box sx={styles.root}>
-      <AppBar position="fixed" className={path==="/login" ? "Navbar-login" : "Navbar"}>
+      <AppBar
+        position="fixed"
+        className={path === "/login" ? "Navbar-login" : "Navbar"}
+      >
         <Toolbar>
           <Typography variant="h6" sx={styles.title}>
             Thunder Library
@@ -60,51 +77,63 @@ const Navbar = () => {
               </Box>
             ) : (
               <Box sx={styles.options}>
-                <Box sx={{ width: "100%" }}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    textColor="inherit"
-                    indicatorColor="secondary"
-                    sx={styles.tabs}
-                  >
-                    <Tab
-                      className="NavOption"
-                      value="home"
-                      label="Inicio"
-                      disableRipple
-                      onClick={scrolltoTop}
-                    />
-                    <Tab
-                      className="NavOption"
-                      value="about"
-                      label="Acerca de"
-                      disableRipple
-                      onClick={(e) => {
-                        handleClick(e, "about");
-                      }}
-                    />
-                    <Tab
-                      className="NavOption"
-                      value="contact"
-                      label="Contáctanos"
-                      disableRipple
-                      onClick={(e) => {
-                        handleClick(e, "contact");
-                      }}
-                    />
-                  </Tabs>
-                </Box>
+                {session ? (
+                  <Button variant="contained" onClick={handleLogout}>Logout</Button>
+                ) : (
+                  <Box sx={{ width: "100%" }}>
+                    <Tabs
+                      value={value}
+                      onChange={handleChange}
+                      textColor="inherit"
+                      indicatorColor="secondary"
+                      sx={styles.tabs}
+                    >
+                      <Tab
+                        className="NavOption"
+                        value="home"
+                        label="Inicio"
+                        disableRipple
+                        onClick={scrolltoTop}
+                      />
+                      <Tab
+                        className="NavOption"
+                        value="about"
+                        label="Acerca de"
+                        disableRipple
+                        onClick={(e) => {
+                          handleClick(e, "about");
+                        }}
+                      />
+                      <Tab
+                        className="NavOption"
+                        value="contact"
+                        label="Contáctanos"
+                        disableRipple
+                        onClick={(e) => {
+                          handleClick(e, "contact");
+                        }}
+                      />
+                    </Tabs>
+                  </Box>
+                )}
               </Box>
             )}
-            <Button
-              variant="contained"
-              disableRipple
-              onClick={() => navigate("/login")}
-              className={path === "/login" ? "RegisterBtn" : "LoginBtn"}
-            >
-              {path === "/login" ? "Registrarse" : "Ingresar"}
-            </Button>
+            {session || path === "/login" ? null : (
+              <Button
+                variant="contained"
+                disableRipple
+                onClick={() => navigate("/login")}
+                className={
+                  path === "/login"
+                    ? "RegisterBtn"
+                    : path === "/nuevoPrestamo"
+                    ? "LogoutBtn"
+                    : "LoginBtn"
+                }
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
