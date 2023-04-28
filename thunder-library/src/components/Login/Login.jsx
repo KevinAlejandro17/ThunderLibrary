@@ -19,20 +19,10 @@ import { useNavigate } from "react-router-dom";
 
 import "../../App.css";
 
-import { toast, ToastContainer, cssTransition } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const roll = cssTransition({
-  enter: "flip-in-ver-left",
-  exit: "flip-out-ver-right",
-});
-
 import background from "../../assets/images/background.png";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { supabase } from "./../../../backend/client";
-import PersonAddAltTwoTone from "@mui/icons-material/PersonAddAltTwoTone";
-import { PauseCircleOutlineTwoTone } from "@mui/icons-material";
 
 function Copyright(props) {
   return (
@@ -52,14 +42,11 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
 function Login() {
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -70,6 +57,7 @@ function Login() {
       }
     });
   }, []);
+
   return (
     <>
       {login ? (
@@ -149,110 +137,108 @@ const RegisterUser = ({
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid item sm={4} md={7} sx={styles.banner} />
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          component={Paper}
-          elevation={6}
-          square
-          sx={styles.formContainer}
-        >
-          <Box sx={styles.loginForm}>
-            <Avatar
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <CssBaseline />
+      <Grid item sm={4} md={7} sx={styles.banner} />
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        sx={styles.formContainer}
+      >
+        <Box sx={styles.loginForm}>
+          <Avatar
+            sx={{
+              m: 1,
+              background: "linear-gradient(90deg, #000006 10%, #26428b)",
+            }}
+          >
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Registrar usuario
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={fname}
+              autoFocus
+              label="Nombres"
+              onChange={({ target }) => setFname(target.value)}
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={lname}
+              autoFocus
+              label="Apellidos"
+              onChange={({ target }) => setLname(target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={phoneNumber}
+              autoFocus
+              label="Teléfono"
+              onChange={({ target }) => setPhoneNumber(target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={email}
+              id="email"
+              label="Email"
+              autoFocus
+              onChange={({ target }) => setEmail(target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              label="Contraseña"
+              type="password"
+              id="password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+
+            <Button
+              onClick={handleRegister}
+              fullWidth
+              variant="contained"
               sx={{
-                m: 1,
+                mt: 3,
+                mb: 2,
                 background: "linear-gradient(90deg, #000006 10%, #26428b)",
               }}
             >
-              <PersonAddAltTwoTone />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Registrar usuario
-            </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={fname}
-                autoFocus
-                label="Nombres"
-                onChange={({ target }) => setFname(target.value)}
-              />
-
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={lname}
-                autoFocus
-                label="Apellidos"
-                onChange={({ target }) => setLname(target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={phoneNumber}
-                autoFocus
-                label="Teléfono"
-                onChange={({ target }) => setPhoneNumber(target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={email}
-                id="email"
-                label="Email"
-                autoFocus
-                onChange={({ target }) => setEmail(target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={password}
-                label="Contraseña"
-                type="password"
-                id="password"
-                onChange={({ target }) => setPassword(target.value)}
-              />
-
-              <Button
-                onClick={handleRegister}
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  background: "linear-gradient(90deg, #000006 10%, #26428b)",
-                }}
-              >
-                Registrar
-              </Button>
-              <Button
-                onClick={() => setLogin(true)}
-                fullWidth
-                variant="contained"
-                sx={{
-                  mb: 2,
-                }}
-              >
-                Ya tienes una cuenta?
-              </Button>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+              Registrar
+            </Button>
+            <Button
+              onClick={() => setLogin(true)}
+              fullWidth
+              variant="contained"
+              sx={{
+                mb: 2,
+              }}
+            >
+              Ya tienes una cuenta?
+            </Button>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
-        </Grid>
+        </Box>
       </Grid>
-    </ThemeProvider>
+    </Grid>
   );
 };
 
@@ -267,85 +253,83 @@ const LoginUser = ({ email, setEmail, password, setPassword }) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid item sm={4} md={7} sx={styles.banner} />
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          component={Paper}
-          elevation={6}
-          square
-          sx={styles.formContainer}
-        >
-          <Box sx={styles.loginForm}>
-            <Avatar
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <CssBaseline />
+      <Grid item sm={4} md={7} sx={styles.banner} />
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        sx={styles.formContainer}
+      >
+        <Box sx={styles.loginForm}>
+          <Avatar
+            sx={{
+              m: 1,
+              background: "linear-gradient(90deg, #000006 10%, #26428b)",
+            }}
+          >
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Iniciar sesión
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={email}
+              id="email"
+              label="Email"
+              autoFocus
+              onChange={({ target }) => setEmail(target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              label="Contraseña"
+              id="password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Mantener sesión iniciada"
+            />
+            <Button
+              onClick={handleLogin}
+              fullWidth
+              variant="contained"
               sx={{
-                m: 1,
+                mt: 3,
+                mb: 2,
                 background: "linear-gradient(90deg, #000006 10%, #26428b)",
               }}
             >
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Iniciar sesión
-            </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={email}
-                id="email"
-                label="Email"
-                autoFocus
-                onChange={({ target }) => setEmail(target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                value={password}
-                label="Contraseña"
-                id="password"
-                onChange={({ target }) => setPassword(target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Mantener sesión iniciada"
-              />
-              <Button
-                onClick={handleLogin}
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  background: "linear-gradient(90deg, #000006 10%, #26428b)",
-                }}
-              >
-                Ingresar
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    ¿Olvidaste tu contraseña?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"¿No tienes una cuenta? Registrate"}
-                  </Link>
-                </Grid>
+              Ingresar
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  ¿Olvidaste tu contraseña?
+                </Link>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"¿No tienes una cuenta? Registrate"}
+                </Link>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
           </Box>
-        </Grid>
+        </Box>
       </Grid>
-    </ThemeProvider>
+    </Grid>
   );
 };

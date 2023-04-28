@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 
 import BookCard from "./BookCard";
 import bg from "../../assets/images/background.png";
+import SolicitudPrestamo from "../NuevoPrestamo/SolicitudPrestamo";
 
-const SearchResults = ({query}) => {
+
+const SearchResults = ({ query }) => {
   const search = query;
   const [books, setBooks] = useState([]);
   const [filter, setFilter] = useState("");
@@ -23,6 +25,9 @@ const SearchResults = ({query}) => {
     }
   };
 
+  const [rental, setRental] = useState({});
+  const [showRental, setShowRental] = useState(false);
+
   useEffect(() => {
     handleSearch();
   }, []);
@@ -40,10 +45,18 @@ const SearchResults = ({query}) => {
                 imgURL={
                   volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : bg
                 }
+                setRental={setRental}
+                setShowRental={setShowRental}
+                showRental={showRental}
               />
             </Grid>
           ))}
       </Grid>
+      {showRental ? (
+        <Grid>
+          <SolicitudPrestamo titulo={rental.title} autor={rental.author} />
+        </Grid>
+      ) : null}
     </Box>
   );
 };

@@ -16,14 +16,27 @@ import "./Books.css";
 const theme = createTheme({
   typography: {
     fontFamily: ["Open Sans", "Roboto"].join(","),
+    color: "white",
   },
 });
 
-const BookCard = ({ title, author, imgURL }) => {
+const BookCard = ({
+  title,
+  author,
+  imgURL,
+  setRental,
+  setShowRental,
+  showRental,
+}) => {
   const [info, setInfo] = useState(false);
 
+  const handleRental = () => {
+    setRental({ title, author });
+    setShowRental(!showRental);
+  };
+
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={theme}>
       <Card
         className="card"
         sx={{
@@ -32,6 +45,7 @@ const BookCard = ({ title, author, imgURL }) => {
           alignItems: "center",
           justifyContent: "center",
         }}
+        onClick={handleRental}
         onMouseEnter={() => setInfo(true)}
         onMouseLeave={() => setInfo(false)}
       >
@@ -68,6 +82,7 @@ const styles = {
     px: 0.5,
     "& .MuiTypography-root": {
       fontFamily: "Open Sans, sans-serif",
+      color: "white",
     },
     "& .MuiTypography-h6": { fontSize: 14 },
   },

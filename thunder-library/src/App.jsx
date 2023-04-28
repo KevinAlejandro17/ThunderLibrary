@@ -5,7 +5,6 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/LandingPage/Home";
 import Login from "./components/Login/Login";
-import SolicitudPrestamo from "./components/NuevoPrestamo/SolicitudPrestamo";
 import BookSearch from "./components/Books/BookSearch";
 import WaitUser from "./components/WaitUser";
 
@@ -36,7 +35,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/nuevoPrestamo" element={<SolicitudPrestamo />} />
         <Route path="/bookSearch" element={<BookSearch />} />
         <Route path="/waiting" element={<WaitUser />} />
       </Routes>

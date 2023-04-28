@@ -123,8 +123,9 @@ function BookSearch({ onSearch }) {
             </Button>
           </Stack>
         </form>
-        {search ? <SearchResults query={query}/> : null}
+        {search ? <SearchResults query={query} /> : null}
       </React.Fragment>
+
     </Box>
   );
 }
