@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Typography, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const Suscripción = () => {
+const Suscripcion = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (event) => {
@@ -14,45 +14,47 @@ const Suscripción = () => {
   return (
     <Box
       id="Suscription"
-      sx={{ height: "30vh", display: "grid", placeItems: "center", py: 10 }}
+      sx={{
+        height: "30vh",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        rowGap: 3
+      }}
     >
-      <Typography variant="h3">Suscripción</Typography>
-      <Typography variant="body1" sx={{ my: 3 }} width="24%">
-        Si deseas recibir las últimas noticias sobre Thunder library, puedes
-        agregar tu correo electrónico para obtenerlas.
-      </Typography>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Grid container gap={2}>
-          <TextField
-            type="email"
-            label="Ingresa tu correo electrónico"
-            variant="outlined"
-            size="small"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            sx={styles.input}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Suscribirse
-          </Button>
-        </Grid>
-      </form>
+        <Typography variant="h5" sx={{ textAlign: "center" }}>
+          Suscríbete a las noticias
+        </Typography>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Grid container gap={2}>
+            <TextField
+              type="email"
+              label="Ingresa tu correo electrónico"
+              variant="outlined"
+              size="small"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={styles.input}
+            />
+            <Button type="submit" variant="contained" color="primary">
+              Suscribirse
+            </Button>
+          </Grid>
+        </form>
     </Box>
   );
 };
 
-export default Suscripción;
+export default Suscripcion;
 
 const styles = {
   input: {

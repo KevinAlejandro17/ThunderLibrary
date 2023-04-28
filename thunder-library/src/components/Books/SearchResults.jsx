@@ -2,10 +2,11 @@ import { Box, Grid } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import BookCard from "./BookCard";
+import bg from "../../assets/images/background.png";
 
-const SearchResults = () => {
+const SearchResults = ({query}) => {
+  const search = query;
   const [books, setBooks] = useState([]);
-  const [search, setSearch] = useState("el principito");
   const [filter, setFilter] = useState("");
 
   const handleSearch = () => {
@@ -13,7 +14,10 @@ const SearchResults = () => {
       fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
         .then((response) => response.json())
         .then((data) => {
-          setBooks(data.items);
+          const items = data.items.filter(
+            (item) => item.volumeInfo?.imageLinks !== undefined
+          );
+          setBooks(items);
           console.log(data.items);
         });
     }
@@ -34,7 +38,7 @@ const SearchResults = () => {
                 title={volumeInfo.title}
                 author={volumeInfo.authors}
                 imgURL={
-                  volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : null
+                  volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : bg
                 }
               />
             </Grid>
@@ -59,8 +63,7 @@ const styles = {
   },
   results: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", // ajustar a tu preferencia
-
+    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // ajustar a tu preferencia
     width: "80%",
     pt: 3,
     pb: 5,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,12 +9,22 @@ import {
 } from "@mui/material";
 
 import SearchResults from "./SearchResults";
+import { supabase } from './../../../backend/client';
 
 function BookSearch({ onSearch }) {
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [author, setAuthor] = useState("");
+
+  useEffect(() => {
+    if(query===""){
+      setSearch(false);
+    }
+  }, [query]);
+
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,11 +47,18 @@ function BookSearch({ onSearch }) {
     setAuthor(event.target.value);
   };
 
+  const getUser = async () => {
+    const user = await supabase.auth.getUser();
+    console.log(user);
+  }
+  
+  getUser();
+  
   return (
     <Box
       id="search"
       sx={{
-        py: 20,
+        pt: 20,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -51,45 +68,62 @@ function BookSearch({ onSearch }) {
       <Typography variant="h3">Buscar</Typography>
       <React.Fragment>
         <h3>Ingresa los datos del libro que deseas.</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ marginBottom: "100px" }}>
           <TextField
             id="book-search"
-            label="Titulo"
+            label="Título"
             value={query}
             onChange={handleQueryChange}
             fullWidth
             sx={styles.input}
+            size="small"
           />
-          <TextField
-            id="book-genre"
-            label="Genero"
-            value={genre}
-            onChange={handleGenreChange}
-            fullWidth
-            sx={styles.input}
-          />
-          <TextField
-            id="book-year"
-            label="Año de Publicacion"
-            type="number"
-            value={year}
-            onChange={handleYearChange}
-            fullWidth
-            sx={styles.input}
-          />
-          <TextField
-            id="book-author"
-            label="Autor"
-            value={author}
-            onChange={handleAuthorChange}
-            fullWidth
-            sx={styles.input}
-          />
-          <Button variant="contained" type="submit">
-            Search
-          </Button>
+          {advancedSearch ? (
+            <Stack spacing={0} sx={{ width: "25vw", mb: 2 }}>
+              <TextField
+                id="book-genre"
+                label="Género"
+                value={genre}
+                onChange={handleGenreChange}
+                fullWidth
+                sx={styles.input}
+                size="small"
+              />
+              <TextField
+                id="book-year"
+                label="Año de Publicación"
+                type="number"
+                value={year}
+                onChange={handleYearChange}
+                fullWidth
+                sx={styles.input}
+                size="small"
+              />
+              <TextField
+                id="book-author"
+                label="Autor"
+                value={author}
+                onChange={handleAuthorChange}
+                fullWidth
+                sx={styles.input}
+                size="small"
+              />
+            </Stack>
+          ) : null}
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" type="submit" onClick={() => setSearch(true)}>
+              Buscar
+            </Button>
+            <Button
+              variant="outlined"
+              disabled={query === ""}
+              onClick={() => setAdvancedSearch(!advancedSearch)}
+            >
+              {!advancedSearch ? "Búsqueda avanzada" : "Búsqueda simple"}
+            </Button>
+          </Stack>
         </form>
-        <SearchResults />
+        {search ? <SearchResults query={query}/> : null}
       </React.Fragment>
     </Box>
   );
@@ -110,6 +144,6 @@ const styles = {
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: "white",
     },
-    mb: 4, // add margin top
+    mb: 2,
   },
 };
