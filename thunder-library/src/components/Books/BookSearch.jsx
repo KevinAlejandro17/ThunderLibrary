@@ -30,14 +30,14 @@ function BookSearch({ onSearch }) {
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [search, setSearch] = useState(false);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
         navigate("/login");
         setSession(false);
       }
     });
-  }, []);
+  }, []); */
 
   const handleSubmit = (event) => {
     event.preventDefault();

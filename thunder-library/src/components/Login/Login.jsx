@@ -51,7 +51,7 @@ function Login() {
 
   const { setSession } = useAuth();
 
-  useEffect(() => {
+/*   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         navigate("/bookSearch");
@@ -59,7 +59,7 @@ function Login() {
       }
     });
   }, []);
-
+ */
   return (
     <>
       {login ? (
