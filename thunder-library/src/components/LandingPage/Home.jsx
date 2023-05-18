@@ -12,8 +12,12 @@ import BookSearch from "../Books/BookSearch";
 
 import { supabase } from "./../../../backend/client";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/Context";
 
 const Home = () => {
+
+  const { setSession } = useAuth();
+
   const getUser = async () => {
     const {
       data: { user },
@@ -23,16 +27,6 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
-      if (!session) {
-        navigate('/')   
-      } else {
-        navigate('/bookSearch')
-      }
-    });
-  }, []);
 
   return (
     <Box sx={styles.home}>

@@ -23,6 +23,7 @@ import background from "../../assets/images/background.png";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { supabase } from "./../../../backend/client";
+import { useAuth } from "../../context/Context";
 
 function Copyright(props) {
   return (
@@ -48,12 +49,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setSession } = useAuth();
+
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/login");
-      } else {
+      if (session) {
         navigate("/bookSearch");
+        setSession(true);
       }
     });
   }, []);

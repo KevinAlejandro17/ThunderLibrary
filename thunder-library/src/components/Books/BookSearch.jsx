@@ -7,24 +7,37 @@ import {
   Stack,
   styled,
 } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import SearchResults from "./SearchResults";
-import { supabase } from './../../../backend/client';
+import { useAuth } from "../../context/Context";
+import { supabase } from "./../../../backend/client";
 
 function BookSearch({ onSearch }) {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
   const [author, setAuthor] = useState("");
 
   useEffect(() => {
-    if(query===""){
+    if (query === "") {
       setSearch(false);
     }
   }, [query]);
 
+  const { setSession } = useAuth();
+
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [search, setSearch] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/login");
+        setSession(false);
+      }
+    });
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,10 +63,10 @@ function BookSearch({ onSearch }) {
   const getUser = async () => {
     const user = await supabase.auth.getUser();
     console.log(user);
-  }
-  
+  };
+
   getUser();
-  
+
   return (
     <Box
       id="search"
@@ -111,7 +124,11 @@ function BookSearch({ onSearch }) {
             </Stack>
           ) : null}
           <Stack direction="row" spacing={2}>
-            <Button variant="contained" type="submit" onClick={() => setSearch(true)}>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => setSearch(true)}
+            >
               Buscar
             </Button>
             <Button
@@ -125,7 +142,6 @@ function BookSearch({ onSearch }) {
         </form>
         {search ? <SearchResults query={query} /> : null}
       </React.Fragment>
-
     </Box>
   );
 }

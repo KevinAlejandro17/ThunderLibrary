@@ -18,9 +18,8 @@ import {
 //documentation: https://mui.com/material-ui/material-icons/
 import HomeRounded from "@mui/icons-material/HomeRounded";
 
-
 import "../App.css";
-import { supabase } from './../../backend/client';
+import { supabase } from "./../../backend/client";
 
 const Navbar = ({ session }) => {
   const [value, setValue] = React.useState("home");
@@ -42,8 +41,7 @@ const Navbar = ({ session }) => {
 
   const path = window.location.pathname;
 
-  const handleLogout = async() => {
-
+  const handleLogout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
@@ -51,7 +49,7 @@ const Navbar = ({ session }) => {
       }
     } catch (error) {
       alert(error.error_description || error.message);
-    } 
+    }
   };
 
   return (
@@ -78,7 +76,9 @@ const Navbar = ({ session }) => {
             ) : (
               <Box sx={styles.options}>
                 {session ? (
-                  <Button variant="contained" onClick={handleLogout}>Logout</Button>
+                  <Button variant="contained" onClick={handleLogout} className="RegisterBtn">
+                    Logout
+                  </Button>
                 ) : (
                   <Box sx={{ width: "100%" }}>
                     <Tabs
@@ -123,13 +123,7 @@ const Navbar = ({ session }) => {
                 variant="contained"
                 disableRipple
                 onClick={() => navigate("/login")}
-                className={
-                  path === "/login"
-                    ? "RegisterBtn"
-                    : path === "/nuevoPrestamo"
-                    ? "LogoutBtn"
-                    : "LoginBtn"
-                }
+                className={path === "/nuevoPrestamo" ? "LogoutBtn" : "LoginBtn"}
               >
                 Login
               </Button>

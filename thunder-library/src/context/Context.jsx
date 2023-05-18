@@ -10,12 +10,16 @@ export const useAuth = () => {
 
 const ContextProvider = ({ children }) => {
   const [tabValue, setTabValue] = useState();
+  const [session, setSession] = useState(null);
+
 
   return (
     <authContext.Provider
       value={{
         tabValue,
         setTabValue,
+        session,
+        setSession
       }}
     >
       {children}

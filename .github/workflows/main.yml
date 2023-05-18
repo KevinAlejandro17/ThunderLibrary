@@ -1,19 +1,41 @@
-name: Test bookSearch App
+name: Deploy Thunder Library to Vercel
 on:
   push:
     branches:
       - master
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm test
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install --prefix thunder-library
+
+    - name: Build
+      run: npm run build --prefix thunder-library
+      
+    - name: Deploy to Vercel
+      uses: actions/checkout@v2
+
+    - name: Install Vercel CLI
+      run: npm install --global vercel@latest
+
+    - name: Pull Vercel Environment Information
+      run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Build Project Artifacts
+      run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Deploy Project Artifacts to Vercel
+      run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+
