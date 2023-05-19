@@ -7,6 +7,7 @@ import Home from "./components/LandingPage/Home";
 import Login from "./components/Login/Login";
 import BookSearch from "./components/Books/BookSearch";
 import WaitUser from "./components/WaitUser";
+import UserList from "./components/UserList";
 
 //import ContextProvider
 import ContextProvider from "./context/Context";
@@ -18,12 +19,9 @@ import { useAuth } from "./context/Context";
 
 const App = () => {
   const [session, setSession] = useState();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-    });
-  }, []);
+ 
 
   return (
     <ContextProvider>
@@ -33,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/bookSearch" element={<BookSearch />} />
         <Route path="/waiting" element={<WaitUser />} />
+        <Route path="/users" element={<UserList />} />
       </Routes>
     </ContextProvider>
   );

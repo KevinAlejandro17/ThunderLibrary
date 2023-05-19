@@ -25,6 +25,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { supabase } from "./../../../backend/client";
 import { useAuth } from "../../context/Context";
 
+import { toast } from "react-toastify";
+
 function Copyright(props) {
   return (
     <Typography
@@ -51,7 +53,7 @@ function Login() {
 
   const { setSession } = useAuth();
 
-/*   useEffect(() => {
+  /*   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         navigate("/bookSearch");
@@ -123,21 +125,22 @@ const RegisterUser = ({
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-
       options: {
         data: {
           full_name: fname + " " + lname,
-          phone_number: phoneNumber,
-          role: "Admin",
+          phone: phoneNumber,
+          address:"Carrera 1",
+          role: "Customer",
         },
-        emailRedirectTo: null,
+        emailRedirectTo: "localhost:5173/users",
       },
     });
+
+    toast.success(`Verifica tu email ${email}`);
 
     setEmail("");
     setPassword("");
   };
-
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
