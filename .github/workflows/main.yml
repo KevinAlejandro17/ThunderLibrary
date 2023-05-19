@@ -2,7 +2,6 @@ name: Deploy Thunder Library to Vercel
 on:
   push:
     branches:
-      - release
       - master
 jobs:
   build-and-deploy:
