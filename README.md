@@ -2,7 +2,7 @@
 Una aplicación web que permita gestionar los préstamos de una librería y que los
 clientes puedan consultar los mismos, así como administrar y monitorear los préstamos de
 la librería.
-U.U
+
 ## Objetivos
 Los objetivos de la aplicación son:
 
