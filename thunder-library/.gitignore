@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+sonarqube-scanner.js
+.scannerwork
 
 # Editor directories and files
 .vscode/*
