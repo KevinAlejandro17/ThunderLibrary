@@ -11,6 +11,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
 import "./Books.css";
 
 const theme = createTheme({
@@ -30,9 +31,10 @@ const BookCard = ({
 }) => {
   const [info, setInfo] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleRental = () => {
-    setRental({ title, author });
-    setShowRental(!showRental);
+    navigate('/rental')
   };
 
   return (

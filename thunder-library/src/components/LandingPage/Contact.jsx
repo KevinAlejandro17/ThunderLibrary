@@ -14,17 +14,11 @@ import emailjs from "@emailjs/browser";
 
 import "../../App.css";
 
-import { toast, ToastContainer, cssTransition } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const roll = cssTransition({
-  enter: "flip-in-ver-left",
-  exit: "flip-out-ver-right",
-});
+import { toast } from "react-hot-toast";
 
 const Contact = () => {
   const form = useRef();
-  const [success, setSuccess] = useState(false);
+
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [email, setEmail] = useState("");
@@ -37,37 +31,27 @@ const Contact = () => {
     const { serviceID, templateID, publicKey } = emailjsConfig;
 
     if (nombre && apellido && email && telefono && mensaje) {
-      setSuccess(true);
       setNombre("");
       setApellido("");
       setEmail("");
       setTelefono("");
       setMensaje("");
-      emailjs
-        .sendForm(serviceID, templateID, form.current, publicKey)
-        .then(
-          (result) => {
-            console.log(result.text);
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        )
-        .then(() => {
-          setTimeout(() => {
-            setSuccess(false);
-          }, 4000);
-        });
+
+      emailjs.sendForm(serviceID, templateID, form.current, publicKey).then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
     } else {
-      toast.success("Enviado correctamente", {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
+      toast.error("Debes llenar todos los campos", {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
       });
     }
   };
@@ -82,21 +66,18 @@ const Contact = () => {
       id="contact"
       sx={{ height: "80vh", display: "grid", placeItems: "center", py: 10 }}
     >
-      <ToastContainer transition={roll} />
       <Typography variant="h3">Contáctanos</Typography>
       <React.Fragment>
         <h3>
           Ingresa tus datos en el formulario y muy pronto te contactaremos
         </h3>
-        {success ? (
-          <Box sx={{ position: "fixed", top: "80px", right: "20px" }}>
-            <Alert variant="outlined" color="success">
-              This is a success alert — check it out!
-            </Alert>
-          </Box>
-        ) : null}
+
         <form onSubmit={handleSubmit} ref={form}>
-          <Stack spacing={3} direction="row" sx={{ marginBottom: 2, width: "40vw" }}>
+          <Stack
+            spacing={3}
+            direction="row"
+            sx={{ marginBottom: 2, width: "40vw" }}
+          >
             <StyledTextField
               type="text"
               variant="outlined"

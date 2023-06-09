@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 
 import { Box, Typography, Grid, Button } from "@mui/material";
-import "../../App.css";
+import "../App.css";
 
-import background from "../../assets/images/background.png";
+import background from "../assets/images/background.png";
 
-import About from "./About";
-import Contact from "./Contact";
-import Footer from "./Footer";
-import BookSearch from "../Books/BookSearch";
+import About from "../components/LandingPage/About";
+import Contact from "../components/LandingPage/Contact";
+import Footer from "../components/LandingPage/Footer";
+import BookSearch from "./BookSearch";
 
-import { supabase } from "./../../../backend/client";
+import { supabase } from "../../backend/client";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/Context";
+import { useAuth } from "../context/Context";
 
 const Home = () => {
 
@@ -69,7 +69,7 @@ const styles = {
     backgroundImage: `url(${background})`,
     maskImage: "linear-gradient(black 90%, transparent)",
     clipPath: "ellipse(99% 76% at 50% 22%)",
-    marginTop: "60px",
+    marginTop: "30px",
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "105vh",

@@ -61,13 +61,7 @@ const theme = createTheme({
   },
 });
 
-const estilofondo = {
-  paperContainer: {
-    height: "100vh",
-    backgroundSize: "cover",
-    backgroundImage: `url(${background})`,
-  },
-};
+
 
 const SolicitudPrestamo = ({ titulo, autor }) => {
   const form = useRef();
@@ -87,8 +81,8 @@ const SolicitudPrestamo = ({ titulo, autor }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper style={estilofondo.paperContainer}>
-        <Container maxWidth="sm" sx={{ pt: "10vh", mt: "3rem" }}>
+      <Paper sx={{height:"100vh", background: "#202020"}}>
+        <Container maxWidth="sm" sx={{ pt: "10vh", mt: "1rem" }}>
           <Typography variant="h4" sx={{ color: "whitesmoke", mb: 2, mt: 2 }}>
             Nuevo préstamo
           </Typography>

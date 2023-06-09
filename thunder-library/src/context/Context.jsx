@@ -11,7 +11,12 @@ export const useAuth = () => {
 const ContextProvider = ({ children }) => {
   const [tabValue, setTabValue] = useState();
   const [session, setSession] = useState(null);
+  const [query, setQuery] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(true);
 
+  const [setselectedBook, setSetselectedBook] = useState(null);
+
+  const [notFound, setNotFound] = useState(false);
 
   return (
     <authContext.Provider
@@ -19,7 +24,13 @@ const ContextProvider = ({ children }) => {
         tabValue,
         setTabValue,
         session,
-        setSession
+        setSession,
+        query,
+        setQuery,
+        notFound,
+        setNotFound,
+        drawerOpen,
+        setDrawerOpen,
       }}
     >
       {children}

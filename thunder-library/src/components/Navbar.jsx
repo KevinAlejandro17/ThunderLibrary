@@ -21,9 +21,13 @@ import HomeRounded from "@mui/icons-material/HomeRounded";
 import "../App.css";
 import { supabase } from "./../../backend/client";
 
-const Navbar = ({ session }) => {
+import { useAuth } from "../context/Context";
+
+const Navbar = ({ style }) => {
   const [value, setValue] = React.useState("home");
   const navigate = useNavigate();
+
+  const { session, drawerOpen } = useAuth();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -53,15 +57,24 @@ const Navbar = ({ session }) => {
   };
 
   return (
-    <Box sx={styles.root}>
+    <Box flexGrow={1}>
       <AppBar
         position="fixed"
+        {...style}
         className={path === "/login" ? "Navbar-login" : "Navbar"}
       >
         <Toolbar>
-          <Typography variant="h6" sx={styles.title}>
-            Thunder Library
-          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              textAlign: "left",
+              fontFamily: "Open Sans, sans-serif",
+              transition: "margin 2s ease-in",
+              ml: drawerOpen ? "240px" : "80px",
+            }}
+          >
+            <Typography variant="h6">Thunder Library</Typography>
+          </Box>
           <Box sx={styles.options}>
             {path === "/login" ? (
               <Box sx={{ display: "flex", columnGap: 5 }}>
@@ -76,7 +89,11 @@ const Navbar = ({ session }) => {
             ) : (
               <Box sx={styles.options}>
                 {session ? (
-                  <Button variant="contained" onClick={handleLogout} className="RegisterBtn">
+                  <Button
+                    variant="contained"
+                    onClick={handleLogout}
+                    className="RegisterBtn"
+                  >
                     Logout
                   </Button>
                 ) : (
@@ -138,14 +155,6 @@ const Navbar = ({ session }) => {
 export default Navbar;
 
 const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  title: {
-    flexGrow: 1,
-    textAlign: "left",
-    fontFamily: "Open Sans, sans-serif",
-  },
   options: {
     display: "flex",
     flexDirection: "row",

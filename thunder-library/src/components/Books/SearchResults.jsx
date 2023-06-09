@@ -1,27 +1,44 @@
-import { Box, Grid } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import BookCard from "./BookCard";
 import bg from "../../assets/images/background.png";
-import SolicitudPrestamo from "../NuevoPrestamo/SolicitudPrestamo";
+import { useAuth } from "../../context/Context";
 
-
-const SearchResults = ({ query }) => {
-  const search = query;
+const SearchResults = ({ isQuery, setIsQuery }) => {
+  const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [filter, setFilter] = useState("");
 
+  const { query } = useAuth();
+
   const handleSearch = () => {
-    if (search !== "") {
-      fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const items = data.items.filter(
-            (item) => item.volumeInfo?.imageLinks !== undefined
-          );
-          setBooks(items);
-          console.log(data.items);
-        });
+    setLoading(true);
+    try {
+      if (query !== "") {
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const items = data.items.filter(
+              (item) => item.volumeInfo?.imageLinks !== undefined
+            );
+            setBooks(items);
+            console.log(data.items);
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsQuery(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
     }
   };
 
@@ -29,35 +46,51 @@ const SearchResults = ({ query }) => {
   const [showRental, setShowRental] = useState(false);
 
   useEffect(() => {
-    handleSearch();
-  }, []);
+    isQuery && handleSearch();
+  }, [query, isQuery]);
 
   return (
-    <Box sx={styles.container}>
-      <h1>Books</h1>
-      <Grid item sx={styles.results}>
-        {books &&
-          books.map(({ volumeInfo, id }) => (
-            <Grid item sx={styles.result} key={id} md={2}>
-              <BookCard
-                title={volumeInfo.title}
-                author={volumeInfo.authors}
-                imgURL={
-                  volumeInfo.imageLinks ? volumeInfo.imageLinks.thumbnail : bg
-                }
-                setRental={setRental}
-                setShowRental={setShowRental}
-                showRental={showRental}
-              />
+    <>
+      <Container sx={styles.container}>
+        <Typography variant="h2">Books</Typography>
+
+        {loading ? (
+          <Box
+            sx={{
+              height: "80vh",
+              width: "100%",
+              display: "grid",
+              placeItems: "center",
+            }}
+          >
+            <CircularProgress sx={{ color: "lightskyblue" }} />
+          </Box>
+        ) : (
+          <>
+            <Grid sx={styles.results}>
+              {books &&
+                books.map(({ volumeInfo, id }) => (
+                  <Grid item sx={styles.result} key={id}>
+                    <BookCard
+                      title={volumeInfo.title}
+                      author={volumeInfo.authors}
+                      imgURL={
+                        volumeInfo.imageLinks
+                          ? volumeInfo.imageLinks.thumbnail
+                          : bg
+                      }
+                      setRental={setRental}
+                      setShowRental={setShowRental}
+                      showRental={showRental}
+                    />
+                  </Grid>
+                ))}
             </Grid>
-          ))}
-      </Grid>
-      {showRental ? (
-        <Grid>
-          <SolicitudPrestamo titulo={rental.title} autor={rental.author} />
-        </Grid>
-      ) : null}
-    </Box>
+          </>
+        )}
+      
+      </Container>
+    </>
   );
 };
 
@@ -66,19 +99,18 @@ export default SearchResults;
 const styles = {
   container: {
     textAlign: "center",
-    marginY: 5,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     color: "white",
-    width: "100%",
+    width: "900px",
   },
   results: {
     display: "grid",
+    placeItems: "center",
     gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // ajustar a tu preferencia
-    width: "80%",
-    pt: 3,
+    width: "100%",
     pb: 5,
   },
   result: {
