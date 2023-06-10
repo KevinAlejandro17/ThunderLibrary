@@ -14,6 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./Books.css";
 
+import { useAuth } from "../../context/Context";
+
 const theme = createTheme({
   typography: {
     fontFamily: ["Open Sans", "Roboto"].join(","),
@@ -21,20 +23,18 @@ const theme = createTheme({
   },
 });
 
-const BookCard = ({
-  title,
-  author,
-  imgURL,
-  setRental,
-  setShowRental,
-  showRental,
-}) => {
+const BookCard = ({ title, author, imgURL, category, bookID }) => {
   const [info, setInfo] = useState(false);
 
   const navigate = useNavigate();
+  const { currentUser, setSelectedBook } = useAuth();
+
+  const oneAuthor = author[0];
+  const selectedBook = { title, oneAuthor, category, bookID };
 
   const handleRental = () => {
-    navigate('/rental')
+    setSelectedBook(selectedBook);
+    navigate("/rental");
   };
 
   return (

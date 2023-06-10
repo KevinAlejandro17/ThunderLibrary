@@ -17,9 +17,9 @@ import { supabase } from "../backend/client";
 
 import "./App.css";
 import { useAuth } from "./context/Context";
-import Signup from "./pages/Signup";  
-import Sidebar from './components/Sidebar';
-import SolicitudPrestamo from './components/NuevoPrestamo/SolicitudPrestamo';
+import Signup from "./pages/Signup";
+import Sidebar from "./components/Sidebar";
+import SolicitudPrestamo from "./components/NuevoPrestamo/SolicitudPrestamo";
 
 const App = () => {
   const location = useLocation();

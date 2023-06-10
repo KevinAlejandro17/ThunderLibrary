@@ -13,7 +13,10 @@ import SearchResults from "../components/Books/SearchResults";
 import { useAuth } from "../context/Context";
 import { supabase } from "../../backend/client";
 
+import { toast } from "react-hot-toast";
+
 import Sidebar from "../components/Sidebar";
+import Rentals from "../components/Rentals";
 
 function BookSearch({ onSearch }) {
   const navigate = useNavigate();
@@ -32,6 +35,14 @@ function BookSearch({ onSearch }) {
     }
   }, [query]);
 
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/login");
+      }
+    });
+  }, []);
+
   const [advancedSearch, setAdvancedSearch] = useState(false);
   const [search, setSearch] = useState(false);
   const [showBooks, setShowBooks] = useState(false);
@@ -41,18 +52,9 @@ function BookSearch({ onSearch }) {
       setSearch(true);
       setShowBooks(true);
     } else {
-      toast("Ingresa un término de búsqueda");
+      toast.error("Ingresa un término de búsqueda");
     }
   };
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/");
-        setSession(false);
-      }
-    });
-  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -75,98 +77,139 @@ function BookSearch({ onSearch }) {
     setAuthor(event.target.value);
   };
 
-  const getUser = async () => {
-    const user = await supabase.auth.getUser();
-    //console.log(user);
-  };
+  const path = window.location.hash;
 
-  getUser();
+  if (path === "") {
+    return (
+      <Box
+        id="search"
+        sx={{
+          pt: 15,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#202020",
+          color: "white",
+        }}
+      >
+        <Sidebar />
 
-  return (
-    <Box
-      id="search"
-      sx={{
-        pt: 15,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#202020",
-        color: "white",
-      }}
-    >
-      <Sidebar />
-
-      <Grid container position="relative">
-        <Grid
-          item
-          md={4}
-          sx={!search ? styles.searchFormFixed : styles.searchForm}
-        >
-          <Typography variant="h4">Buscar</Typography>
-          <h3>Ingresa los datos del libro que deseas.</h3>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id="book-search"
-              label="Título"
-              value={query}
-              onChange={handleQueryChange}
-              fullWidth
-              sx={styles.input}
-              size="small"
-            />
-            {advancedSearch ? (
-              <Stack sx={{ width: "25vw", mb: 2 }}>
-                <TextField
-                  id="book-genre"
-                  label="Género"
-                  value={genre}
-                  onChange={handleGenreChange}
-                  fullWidth
-                  sx={styles.input}
-                  size="small"
-                />
-                <TextField
-                  id="book-year"
-                  label="Año de Publicación"
-                  type="number"
-                  value={year}
-                  onChange={handleYearChange}
-                  fullWidth
-                  sx={styles.input}
-                  size="small"
-                />
-                <TextField
-                  id="book-author"
-                  label="Autor"
-                  value={author}
-                  onChange={handleAuthorChange}
-                  fullWidth
-                  sx={styles.input}
-                  size="small"
-                />
+        <Grid container position="relative">
+          <Grid
+            item
+            md={4}
+            sx={!search ? styles.searchFormFixed : styles.searchForm}
+          >
+            <Typography variant="h4">Buscar</Typography>
+            <h3>Ingresa los datos del libro que deseas.</h3>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                id="book-search"
+                label="Título"
+                value={query}
+                onChange={handleQueryChange}
+                fullWidth
+                sx={styles.input}
+                size="small"
+              />
+              {advancedSearch ? (
+                <Stack sx={{ width: "25vw", mb: 2 }}>
+                  <TextField
+                    id="book-genre"
+                    label="Género"
+                    value={genre}
+                    onChange={handleGenreChange}
+                    fullWidth
+                    sx={styles.input}
+                    size="small"
+                  />
+                  <TextField
+                    id="book-year"
+                    label="Año de Publicación"
+                    type="number"
+                    value={year}
+                    onChange={handleYearChange}
+                    fullWidth
+                    sx={styles.input}
+                    size="small"
+                  />
+                  <TextField
+                    id="book-author"
+                    label="Autor"
+                    value={author}
+                    onChange={handleAuthorChange}
+                    fullWidth
+                    sx={styles.input}
+                    size="small"
+                  />
+                </Stack>
+              ) : null}
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  onClick={handleSearch}
+                >
+                  Buscar
+                </Button>
+                <Button
+                  variant="outlined"
+                  disabled={query === ""}
+                  onClick={() => setAdvancedSearch(!advancedSearch)}
+                >
+                  {!advancedSearch ? "Búsqueda avanzada" : "Búsqueda simple"}
+                </Button>
               </Stack>
-            ) : null}
-            <Stack direction="row" spacing={2}>
-              <Button variant="contained" type="submit" onClick={handleSearch}>
-                Buscar
-              </Button>
-              <Button
-                variant="outlined"
-                disabled={query === ""}
-                onClick={() => setAdvancedSearch(!advancedSearch)}
-              >
-                {!advancedSearch ? "Búsqueda avanzada" : "Búsqueda simple"}
-              </Button>
-            </Stack>
-          </form>
+            </form>
+          </Grid>
+          <Grid
+            item
+            md={8}
+            sx={{ height: "100vh", opacity: showBooks ? 1 : 0 }}
+          >
+            <SearchResults isQuery={isQuery} setIsQuery={setIsQuery} />
+          </Grid>
         </Grid>
-        <Grid item md={8} sx={{ height: "100vh", opacity: showBooks ? 1 : 0 }}>
-          <SearchResults isQuery={isQuery} setIsQuery={setIsQuery} />
-        </Grid>
-      </Grid>
-    </Box>
-  );
+      </Box>
+    );
+  } else if (path === "#viewRentals") {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          background: "#202020",
+        }}
+      >
+        <Sidebar />
+        <Rentals />
+      </Box>
+    );
+  } else if (path === "#history") {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          pt: "10rem",
+          background: "#202020",
+        }}
+      >
+        <Sidebar />
+        <Stack direction="column" spacing={4} textAlign="center" mt={18}>
+          <Typography variant="h4" sx={{ color: "white" }}>
+            Historial de alquileres
+          </Typography>
+          <Typography variant="h6" sx={{ color: "white" }}>
+            No se han finalizado alquileres
+          </Typography>
+        </Stack>
+      </Box>
+    );
+  }
 }
 
 export default BookSearch;

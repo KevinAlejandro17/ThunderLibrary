@@ -19,7 +19,12 @@ import { styled, useTheme } from "@mui/material/styles";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
+import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
+import HistoryIcon from "@mui/icons-material/History";
+import SearchIcon from "@mui/icons-material/Search";
 import { useAuth } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 const drawWidth = 240;
 
@@ -69,6 +74,8 @@ const Drawer = styled(MuiDrawer, {
 function Sidebar() {
   const [open, setOpen] = useState(true);
 
+  const navigate = useNavigate();
+
   const { drawerOpen, setDrawerOpen, session } = useAuth();
 
   var userName;
@@ -83,8 +90,6 @@ function Sidebar() {
     setOpen(!open);
     setDrawerOpen(!open);
   };
-
-  const path = window.location.pathname;
 
   const drawer = (
     <div>
@@ -108,24 +113,38 @@ function Sidebar() {
 
       <Divider />
       <List>
-        {["Buscar Libros", "Ver libros alquilados"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx={{ color: "white" }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding onClick={() => navigate("/dashboard")}>
+          <ListItemButton>
+            <ListItemIcon sx={{ color: "white" }}>
+              <SearchIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Buscar libros"} />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem
+          disablePadding
+          onClick={() => navigate("/dashboard#viewRentals")}
+        >
+          <ListItemButton>
+            <ListItemIcon sx={{ color: "white" }}>
+              <ViewTimelineIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Ver alquilados"} />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider color="lightslategray" />
       <List sx={{ height: "100%" }}>
         {["Historial"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem
+            key={text}
+            disablePadding
+            onClick={() => navigate("/dashboard#history")}
+          >
             <ListItemButton>
               <ListItemIcon sx={{ color: "white" }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <HistoryIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>

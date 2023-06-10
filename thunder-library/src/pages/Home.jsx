@@ -25,6 +25,15 @@ const Home = () => {
     console.log(user.id);
   };
 
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        navigate("/dashboard");
+      }
+    });
+  }, []);
+
+
   const navigate = useNavigate();
 
 

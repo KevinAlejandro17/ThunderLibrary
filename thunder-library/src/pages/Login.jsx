@@ -51,7 +51,7 @@ function Login() {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate("/bookSearch");
+        navigate("/dashboard");
       }
     });
   }, []);
@@ -135,6 +135,7 @@ function Login() {
                 margin="normal"
                 required
                 name="password"
+                type="password"
                 fullWidth
                 value={user.password}
                 label="Contraseña"

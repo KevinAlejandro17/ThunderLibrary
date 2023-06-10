@@ -74,6 +74,10 @@ const SearchResults = ({ isQuery, setIsQuery }) => {
                     <BookCard
                       title={volumeInfo.title}
                       author={volumeInfo.authors}
+                      category={
+                        volumeInfo.categories ? volumeInfo.categories[0] : null
+                      }
+                      bookID={id}
                       imgURL={
                         volumeInfo.imageLinks
                           ? volumeInfo.imageLinks.thumbnail
@@ -88,7 +92,6 @@ const SearchResults = ({ isQuery, setIsQuery }) => {
             </Grid>
           </>
         )}
-      
       </Container>
     </>
   );
